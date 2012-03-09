@@ -4084,9 +4084,31 @@ sub fallback_on
 				  "1", "fallback");
 	}
 
-	if (!defined ($v->{real_status})) {
+	if (!defined ($v->{real_status}) or no_dest($v->{real_status})) {
 		&do_fallback_command($v, "start");
 	}
+}
+
+# no_dest
+# Check if there is no destination available
+# pre: rs: real_status of virtual to be checked
+# post: none
+# return: 1 if %rs is empty or there is no destination available
+#         else 0
+sub no_dest
+{
+	my (%rs) = (@_);
+	return 1 unless (%rs); # rs not empty or undefined
+
+	for my $real_id (keys %rs) {
+		my ($check, $proto, $server, $port, $vhost, $checkport, $weight, $forward, $request, $receive) = split(/:/, $real_id);
+		if ($weight gt 0) {
+		  &ld_debug(2, "no_dest: found active instance");
+			return 0;
+		}
+	}
+	&ld_debug(2, "no_dest: all inactive");
+	return 1;
 }
 
 # fallback_off
