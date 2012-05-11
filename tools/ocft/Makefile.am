@@ -32,12 +32,14 @@ ocftcfgs_DATA      =  apache  	\
 		       	 mysql		\
 		       	 pgsql		\
 		       	 db2		\
+		       	 oracle		\
 		       	 drbd.linbit		\
 		       	 nfsserver	\
 		       	 portblock	\
 		       	 iscsi	\
 		       	 named	\
 		       	 postfix	\
+		       	 Xinetd	\
 			 SendArp
 
 ocftdir			= $(datadir)/$(PACKAGE_NAME)/ocft
